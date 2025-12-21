@@ -2,7 +2,7 @@
 #include <stdio.h> 
 #include <string.h> 
 #include "userNetwork.h"
-#include "othelo.h"
+#include "function_othelo.h"
 int plateau_de_jeu[8][8] = {0};
 
 

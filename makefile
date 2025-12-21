@@ -40,20 +40,20 @@ all: $(ALL)
 	$(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@
 
 # ===== Édition de liens =====
-$(BIN_JEU): $(OBJ_JEU)
+$(BIN_JEU): $(OBJ_JEU) function_othelo.o
 	$(CC) $^ -o $@
 
-$(BIN_USER): $(OBJ_USER)
+$(BIN_USER): $(OBJ_USER) 
 	$(CC) $^ $(LDFLAGS) $(LDLIBS) $(RPATH) -o $@
 
-$(BIN_AUTO): $(OBJ_AUTO)
+$(BIN_AUTO): $(OBJ_AUTO) function_othelo.o
 	$(CC) $^ $(LDFLAGS) $(LDLIBS) $(RPATH) -o $@
 
-$(BIN_IA): $(OBJ_IA)
+$(BIN_IA): $(OBJ_IA) function_othelo.o
 	$(CC) $^ $(LDFLAGS) $(LDLIBS) $(RPATH) -o $@
 
 # ===== Exécution =====
-run: $(BIN_JEU)
+run: $(BIN_JEU) 
 	./jeu
 
 connexion: $(BIN_USER)
