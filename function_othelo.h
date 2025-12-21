@@ -1,6 +1,5 @@
 #include <stdio.h> 
 #include <stdbool.h>
-extern int plateau[8][8];
 void affichage(int plt[8][8]);
 
 int KelCaz(int joueur, int*x, int*y );
