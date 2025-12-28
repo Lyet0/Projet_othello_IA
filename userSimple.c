@@ -43,6 +43,7 @@ int main(int argc,char *argv[])
 			g->move=65; // si scanf correct cette valeur est modifiée, sinon cela terminera la partie. 
 			// recuperation du coup sur stdin 
 			printf("Enter your move:\n");
+			printf("%d",g->myColor);
 			scanf("%d",&(g->move)); 
 			printf("playing move %d (x=%d,y=%d)\n",g->move,g->move%8,g->move/8);
 			doMoveOthello(g);	// envoie du coup à l'adversaire 

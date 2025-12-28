@@ -30,7 +30,7 @@ BIN_USER := userSimple
 BIN_AUTO := auto
 BIN_IA   := IA
 
-ALL := $(BIN_JEU) $(BIN_USER) $(BIN_AUTO) $(BIN_IA)
+ALL := $(BIN_JEU) $(BIN_USER) $(BIN_AUTO) 
 
 # ===== Règle par défaut =====
 all: $(ALL)
@@ -40,13 +40,13 @@ all: $(ALL)
 	$(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@
 
 # ===== Édition de liens =====
-$(BIN_JEU): $(OBJ_JEU) function_othelo.o
+$(BIN_JEU): $(OBJ_JEU) function_othelo.o 
 	$(CC) $^ -o $@
 
 $(BIN_USER): $(OBJ_USER) 
 	$(CC) $^ $(LDFLAGS) $(LDLIBS) $(RPATH) -o $@
 
-$(BIN_AUTO): $(OBJ_AUTO) function_othelo.o
+$(BIN_AUTO): $(OBJ_AUTO) $(OBJ_IA) function_othelo.o
 	$(CC) $^ $(LDFLAGS) $(LDLIBS) $(RPATH) -o $@
 
 $(BIN_IA): $(OBJ_IA) function_othelo.o

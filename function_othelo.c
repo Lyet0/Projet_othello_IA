@@ -2,11 +2,19 @@
 #include <stdbool.h>
 void affichage(int plt[8][8]){
     //Affichage du tableau
-    printf("  y = 0 1 2 3 4 5 6 7\n");
+    printf("  y =0  1  2  3  4  5  6  7");
     for(int a=0; a<8; a++){
-        printf("\nx=%d :",a);
+        printf("\nx=%d ",a);
         for(int b=0; b<8; b++){
-            printf(" %d",plt[a][b]);
+            if (plt[a][b]==0){
+                printf("\033[42m   \033[0m");
+            }
+            if (plt[a][b]==2){
+                printf("\033[47m   \033[0m");
+            }
+            if (plt[a][b]==1){
+                printf("\033[40m   \033[0m");
+            }
         }
     }
     printf("\n \n");
@@ -61,8 +69,7 @@ int SePaPocible(int (*plt)[8], int x, int y, int joueur){
             }
         }
     }
-    if (tempossible == 0) {possible = 0;}
-    printf("Possibilité : %d \n", possible);
+    if (tempossible == 0) {possible = 0;printf("ntm fdp");}
     return possible;
 }
 int FeeLePa(int plt[8][8], int x, int y, int joueur) {
@@ -108,7 +115,19 @@ bool Jouable(int plt[8][8], int joueur){
     if (c==0) {return false;}
     else {return true;}
 }
-
+int couppossible (int plt[8][8], int joueur, int coup[22]){
+    //Remplit le tableau coup avec les coups possibles
+    int k = 0;
+    for (int i=0; i<8; i++) {
+        for (int j=0; j<8; j++){
+            if (FeeLePa(plt, i, j, joueur)==1){
+                coup[k]=i*8+j;
+                k++;
+            }
+        }
+    }
+    return k;
+}
 bool fini (int (*plt)[8]){
     //Vérifie si le tableau est plein [Potentiellement redondant]
     for (int i=0; i<8; i++){

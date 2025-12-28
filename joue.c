@@ -3,14 +3,11 @@
 #include <string.h> 
 #include "userNetwork.h"
 #include "function_othelo.h"
+#include "IA.h"
 int plateau_de_jeu[8][8] = {0};
 
 
 #define BLACK 0  
-void update_tab(int plt[8][8],int bouge,int couleur)
-	{
-	plt[bouge/8][bouge%8]=couleur;
-	}
 int main(int argc,char *argv[]) 
 {
 	plateau_de_jeu[3][3] = 2; 
@@ -38,23 +35,23 @@ int main(int argc,char *argv[])
 	}
 	// debut de partie
 	while (g->state == PLAYING && !feof(stdin)) {
-	 	if (g->myColor != g->currentPlayer) { // attente du coup de l'adversaire 
+		if (g->myColor != g->currentPlayer) { // attente du coup de l'adversaire 
 			if ((move=waitMoveOthello(g)) == 0 ) {
 				printf("Game status %d: \t",g->state); 
 				if (g->state == PLAYING) { 
 					printf("Received move from server %d (x=%d,y=%d)\n",g->move,g->move%8,g->move/8);
-					 update_tab(plateau_de_jeu,g->move,g->currentPlayer);
+					SePaPocible(plateau_de_jeu,g->move/8,g->move%8,g->currentPlayer+1);
 				}
 			}
 		}
 	 	else { 		
-			g->move=65; // si scanf correct cette valeur est modifiée, sinon cela terminera la partie. 
-			// recuperation du coup sur stdin 
-			printf("Enter your move:\n");
-			g->move = 44; 
-			printf("playing move %d (x=%d,y=%d)\n",g->move,g->move%8,g->move/8);
+			affichage(plateau_de_jeu); 
+			int coup=choisircoup(plateau_de_jeu,g->myColor+1,5); 
+			printf("%d\n",coup);
+			g->move =coup;
+			printf("playing move %d ",g->move);
 			doMoveOthello(g);
-			update_tab(plateau_de_jeu,g->move,g->currentPlayer);
+			SePaPocible(plateau_de_jeu,g->move/8,g->move%8,g->currentPlayer+1);
 	// envoie du coup à l'adversaire 
 	   	}
 		g->currentPlayer=!g->currentPlayer; 

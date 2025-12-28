@@ -13,3 +13,5 @@ int FeeLePa(int plt[8][8], int x, int y, int joueur) ;
 bool Jouable(int plt[8][8], int joueur);
 
 bool fini (int (*plt)[8]);
+
+int couppossible (int plt[8][8], int joueur, int coup[22]);
