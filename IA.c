@@ -36,7 +36,7 @@ int choix(int coup[22]){
 }
 
 int min_max(int deep,int plt[8][8],int type,int joueur ){
-    if ((deep == 0)||(fini(plt)==true)||(Jouable(plt, joueur))) {
+    if ((deep == 0)||(fini(plt)==true)||!(Jouable(plt, joueur))) {
         return evaluation(plt,joueur);
     }
     int bestscore;

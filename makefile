@@ -17,20 +17,23 @@ SRC_JEU  := jeu_otheloV3.c
 SRC_USER := userSimple.c
 SRC_AUTO := joue.c
 SRC_IA   := IA.c
+SRC_test := test.c
 
 # ===== Fichiers objet =====
 OBJ_JEU  := $(SRC_JEU:.c=.o)
 OBJ_USER := $(SRC_USER:.c=.o)
 OBJ_AUTO := $(SRC_AUTO:.c=.o)
 OBJ_IA   := $(SRC_IA:.c=.o)
+OBJ_TEST := $(SRC_test:.c=.o)
 
 # ===== Exécutables =====
 BIN_JEU  := jeu
 BIN_USER := userSimple
 BIN_AUTO := auto
 BIN_IA   := IA
+BIN_test := test
 
-ALL := $(BIN_JEU) $(BIN_USER) $(BIN_AUTO) 
+ALL := $(BIN_JEU) $(BIN_USER) $(BIN_AUTO) $(BIN_test)
 
 # ===== Règle par défaut =====
 all: $(ALL)
@@ -51,6 +54,8 @@ $(BIN_AUTO): $(OBJ_AUTO) $(OBJ_IA) function_othelo.o
 
 $(BIN_IA): $(OBJ_IA) function_othelo.o
 	$(CC) $^ $(LDFLAGS) $(LDLIBS) $(RPATH) -o $@
+$(BIN_test): $(OBJ_TEST) function_othelo.o
+	$(CC) $^ $(LDFLAGS) -o $@
 
 # ===== Exécution =====
 run: $(BIN_JEU) 
@@ -64,6 +69,8 @@ connexion2: $(BIN_USER)
 
 go: $(BIN_AUTO)
 	./auto $(MDP) $(IP_SERV) $(ID) $(PORT)
+go2: $(BIN_AUTO)
+	./auto binome2 $(IP_SERV) 2 $(PORT)
 
 # ===== Nettoyage =====
 clean:

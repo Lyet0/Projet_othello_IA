@@ -3,6 +3,7 @@
 #include <stdint.h> 
 #include <errno.h>
 #include <stdbool.h>
+#include "function_othelo.h"
 
 #define N 8 
 #define BLACK 0 
@@ -18,15 +19,6 @@ typedef int32_t monType;
 #define MYWHITE 1 
 #define MYEMPTY 0 
 #endif 
-
-bool Valide(int x, int y){
-    //Vérifie si la case en question appartient au tableau
-    int V=false;
-    if (((x>-1)&&(x<8))&&((y>-1)&&(y<8))) {
-        V = true;
-    }
-    return V;
-}
 
 // Assume we have a function that modifies our board 
 int faireCoupOthello(monType plt[N][N],int8_t coup,int8_t joueur) {
@@ -149,8 +141,9 @@ int main(int argc, char *argv[])
 			printf("#test %d tableau initial\n",nbtest); 
 			afficheTableau(monTableau); 
 			lireCoup(&c,&p,fi); 
-			lireTableau(after,fi); 
-			faireCoupOthello(monTableau,c,p);
+			lireTableau(after,fi);
+			if (SePaPocible(monTableau,c/8,c%8,p)!=0)
+			{monTableau[c/8][c%8] = p; }
 			printf("coup de %d en %d %d\n",p,c/8,c%8); 
 			printf("tableau de ref\n"); 
 			afficheTableau(after); 
