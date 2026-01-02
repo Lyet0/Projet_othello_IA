@@ -20,10 +20,13 @@ int evaluation(int plt[8][8],int joueur){
         if (plt[i/8][i%8]==joueur){
             score = score + tab_value[i/8][i%8];
         }
+        else if (plt[i/8][i%8]==3 - joueur){
+            score = score - tab_value[i/8][i%8];
+        }
     }
 
 }
-int choix(int coup[22]){
+int choix(int coup[22]){//à randomiser
     int max = coup[0];
     int index = 0;
     for (int i=1; i<22; i++){
@@ -35,7 +38,7 @@ int choix(int coup[22]){
     return index;
 }
 
-int min_max(int deep,int plt[8][8],int type,int joueur ){
+int min_max(int deep,int plt[8][8],int type,int joueur ){//à optimiser
     if ((deep == 0)||(fini(plt)==true)||!(Jouable(plt, joueur))) {
         return evaluation(plt,joueur);
     }
@@ -87,10 +90,7 @@ int min_max(int deep,int plt[8][8],int type,int joueur ){
 }
 int choisircoup (int plt[8][8], int joueur,int deep){
     int coup[22]={-1};
-    int nb_coup = couppossible(plt, joueur, coup);
-    for (int i=0; i<nb_coup;i++){
-        min_max(5, plt, 1, joueur);
-    }
+    int nb_coup = couppossible(plt, joueur, coup); 
     int bscore[22]={-10000};
         for (int i=0; i<nb_coup;i++){
             int refplt[8][8];
@@ -110,7 +110,7 @@ int choisircoup (int plt[8][8], int joueur,int deep){
     return coup[choix(bscore)];
 }
 
-int alpha_beta(int plt[8][8],int play,int n,int joueur,int alpha,int beta){
+int alpha_beta(int plt[8][8],int play,int n,int joueur,int alpha,int beta){//à faire
 
 }
 

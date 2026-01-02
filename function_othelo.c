@@ -46,7 +46,7 @@ bool Valide(int x, int y){
     return V;
 }
 
-int SePaPocible(int (*plt)[8], int x, int y, int joueur){
+int SePaPocible(int (*plt)[8], int x, int y, int joueur){//à optimiser
     int tempcarreepossible = 0;
     int tempossible = 0;
 	int temppossible3=1;
@@ -121,7 +121,8 @@ int SePaPocible(int (*plt)[8], int x, int y, int joueur){
     if (tempossible == 0) {possible = 0;}
     return possible;
 }*/
-int FeeLePa(int plt[8][8], int x, int y, int joueur) {
+int a=0;
+int FeeLePa(int plt[8][8], int x, int y, int joueur) {//à optimiser
     // 1. SÉCURITÉ : On vérifie d'abord si la case existe (Gère le cas PASS 8 0)
     if (!Valide(x, y)) {
         return 0;
@@ -167,7 +168,7 @@ bool Jouable(int plt[8][8], int joueur){
     if (c==0) {return false;}
     else {return true;}
 }
-int couppossible (int plt[8][8], int joueur, int coup[22]){
+int couppossible (int plt[8][8], int joueur, int coup[22]){//à optimiser
     //Remplit le tableau coup avec les coups possibles
     int k = 0;
     for (int i=0; i<8; i++) {

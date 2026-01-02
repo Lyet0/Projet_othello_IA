@@ -48,7 +48,7 @@ int main(int argc,char *argv[])
 			}
 		}
 	 	else { 		
-			int coup=choisircoup(plateau_de_jeu,g->myColor+1,5); 
+			int coup=choisircoup(plateau_de_jeu,g->myColor+1,7); 
 			if (coup==-1) {
 				coup=64; //pass
 			}
