@@ -9,7 +9,7 @@ typedef struct{
     int score; 
 }noeud;
 
-int choix(int coup[22]);
-int min_max();
-int choisircoup (int plt[8][8], int joueur, int deep);
+int choix(int coup[64], int taille);
+int min_max(int deep,int plt[8][8],int type,int current_player, int root_player);
+int choisircoup (int plt[8][8], int joueur,int deep);
 int evaluation(int plt[8][8],int joueur);

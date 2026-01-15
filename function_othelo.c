@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 void affichage(int plt[8][8])
-    /*{
+    {
     //Affichage du tableau
     printf("  y =0  1  2  3  4  5  6  7");
     for(int a=0; a<8; a++){
@@ -20,7 +20,7 @@ void affichage(int plt[8][8])
     }
     printf("\n \n");
 }
-    */
+    /*
     {
         for (int i=0; i<8; i++){
             for (int j=0; j<8; j++){
@@ -28,7 +28,7 @@ void affichage(int plt[8][8])
             }
             printf("\n");
         }
-    }
+    }*/
 
 int KelCaz(int joueur, int*x, int*y ){
     //Demande au joueur l'emplacement où il veut jouer ex : 4 3 = milieu haut-gauche
@@ -121,7 +121,6 @@ int SePaPocible(int (*plt)[8], int x, int y, int joueur){//à optimiser
     if (tempossible == 0) {possible = 0;}
     return possible;
 }*/
-int a=0;
 int FeeLePa(int plt[8][8], int x, int y, int joueur) {//à optimiser
     // 1. SÉCURITÉ : On vérifie d'abord si la case existe (Gère le cas PASS 8 0)
     if (!Valide(x, y)) {
@@ -168,7 +167,7 @@ bool Jouable(int plt[8][8], int joueur){
     if (c==0) {return false;}
     else {return true;}
 }
-int couppossible (int plt[8][8], int joueur, int coup[22]){//à optimiser
+int couppossible (int plt[8][8], int joueur, int coup[64]){//à optimiser
     //Remplit le tableau coup avec les coups possibles
     int k = 0;
     for (int i=0; i<8; i++) {
