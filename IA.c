@@ -45,7 +45,7 @@ int choix(int coup[64], int taille){//à randomiser
         if (coup[i]>coup[index]){
             index = i;
         }
-    }
+    }/**/
     if (rand()%3==0){
         for (int j=0; j<64; j++){
             if ((coup[index]*0.85<coup[j])&&(coup[j]<coup[index])){
@@ -56,7 +56,7 @@ int choix(int coup[64], int taille){//à randomiser
     return index;
 }
 
-int min_max(int deep,int plt[8][8],int type,int current_player, int root_player ){//à optimiser
+int min_max(int deep,int plt[8][8],int type,int current_player, int root_player,int alpha,int beta ){//à optimiser
     if ((deep == 0)||(fini(plt)==true)) {
         return evaluation(plt,root_player);
     }
@@ -65,7 +65,7 @@ int min_max(int deep,int plt[8][8],int type,int current_player, int root_player 
             return evaluation(plt,root_player);
         }
         else {
-        return min_max(deep-1, plt, 1-type,  3-current_player, root_player);}
+        return min_max(deep-1, plt, 1-type,  3-current_player, root_player,alpha,beta) ;}
     }
 
     int bestscore;
@@ -73,7 +73,7 @@ int min_max(int deep,int plt[8][8],int type,int current_player, int root_player 
     memset(coup, -1000, 64);
     int nb_coup = couppossible(plt, current_player, coup);
     if (type==1){//MAX
-        bestscore =-10000; 
+        bestscore =-100000; 
         for (int i=0; i<nb_coup;i++){
             if(time(NULL)-letemps>14){
                 bestscore=evaluation(plt,root_player);
@@ -85,15 +85,22 @@ int min_max(int deep,int plt[8][8],int type,int current_player, int root_player 
             int x = coup[i]/8;
             int y = coup[i]%8;
             SePaPocible(refplt, x, y, current_player);
-            int score = min_max(deep - 1, refplt, 0, 3 - current_player, root_player);
+            int score = min_max(deep - 1, refplt, 0, 3 - current_player, root_player, alpha, beta);            
             if (score>bestscore){
                 bestscore = score;
             }
+            if (bestscore > alpha){
+                bestscore = alpha;
+            }
+            if (beta <=alpha){
+                return bestscore;
+            }
+            
         }
 
     }
     if (type==0){//MIN
-        bestscore=10000; 
+        bestscore=100000; 
         for (int i=0; i<nb_coup;i++){
             if(time(NULL)-letemps>14){
                 bestscore=evaluation(plt,root_player);
@@ -105,10 +112,20 @@ int min_max(int deep,int plt[8][8],int type,int current_player, int root_player 
             int x = coup[i]/8;
             int y = coup[i]%8;
             SePaPocible(refplt, x, y, current_player);
-            int score = min_max(deep - 1, refplt, 1, 3 - current_player, root_player);
+            int score = min_max(deep - 1, refplt, 0, 3 - current_player, root_player, alpha, beta);            
+            if (score<alpha){
+                return score;
+            }
             if (score<bestscore){
                 bestscore = score;
             }
+            if (bestscore < alpha){
+                 beta = bestscore;
+            }
+            if (beta <=alpha){
+                return bestscore;
+            }
+            
         }
     }
     return bestscore;
@@ -131,13 +148,11 @@ int choisircoup (int plt[8][8], int joueur,int deep){
             int y = coup[i]%8;
             SePaPocible(refplt, x, y, joueur);
             refplt[x][y]=joueur;
-            int score = min_max(deep - 1, refplt, 0, 3 - joueur, joueur);
+            int score = min_max(deep - 1, refplt, 0, 3 - joueur, joueur,-10000,10000);
             bscore[i]=score;
         }
     return coup[choix(bscore,nb_coup)];
 }
-
-//int alpha_beta(int plt[8][8],int play,int n,int joueur,int alpha,int beta){//à faire}
 
 
 
