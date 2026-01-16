@@ -1,13 +1,7 @@
 #include <stdio.h> 
 #include <stdbool.h>
 extern int tab_value[8][8];
-typedef struct{
-    int plt[8][8];
-    short int minmax;
-    int profondeur;
-    int* possible_coups[22];
-    int score; 
-}noeud;
+
 
 int choix(int coup[64], int taille);
 int min_max(int deep,int plt[8][8],int type,int current_player, int root_player, int balpha) ;

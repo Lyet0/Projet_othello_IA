@@ -20,15 +20,6 @@ void affichage(int plt[8][8])
     }
     printf("\n \n");
 }
-    /*
-    {
-        for (int i=0; i<8; i++){
-            for (int j=0; j<8; j++){
-                printf("%d ", plt[i][j]);
-            }
-            printf("\n");
-        }
-    }*/
 
 int KelCaz(int joueur, int*x, int*y ){
     //Demande au joueur l'emplacement où il veut jouer ex : 4 3 = milieu haut-gauche
@@ -46,7 +37,7 @@ bool Valide(int x, int y){
     return V;
 }
 
-int SePaPocible(int (*plt)[8], int x, int y, int joueur){//à optimiser
+int SePaPocible(int (*plt)[8], int x, int y, int joueur){
     int tempcarreepossible = 0;
     int tempossible = 0;
 	int temppossible3=1;
@@ -90,37 +81,6 @@ int SePaPocible(int (*plt)[8], int x, int y, int joueur){//à optimiser
     return possible;
 
 }
-/*int FeeLePa(int plt[8][8], int x, int y, int joueur) {
-    //Vérifie si le coup est possible sans le jouer
-    int tempcarreepossible = 0;
-    int tempossible = 0;
-    //Impossibilité à cause de la case pleine
-    int possible = 1;
-    if (plt[x][y]!=0) {possible = 0;}
-    //Possibilité si ligne adverse suivie par pion allié.
-    else {
-        //Choisir l'une des directons par rapport à la case
-        for(int a=-1; a<2; a++){
-            for(int b=-1; b<2; b++){ 
-                if (Valide(x+a, y+b) && (((a!=0))||(b!=0))) {
-                    int opp = 1;
-                    //Vérifier dans cette direction la première case, répéter si elle est adverse
-                    while (((plt[x+a*opp][y+b*opp] != 0) && Valide(x+a*opp, y+b*opp))&&(tempcarreepossible == 0)) {
-                        tempcarreepossible = 0;
-                        //Si on atteint une alliée après avoir passé des adverses, indiquer la possibilité
-                        if ((plt[x+a*opp][y+b*opp] == joueur)&& (opp>=1)){
-                            tempcarreepossible = 1;
-                            tempossible = 1;
-                        }
-                        opp++;                  
-                    }
-                }
-            }
-        }
-    }
-    if (tempossible == 0) {possible = 0;}
-    return possible;
-}*/
 int FeeLePa(int plt[8][8], int x, int y, int joueur) {//à optimiser
     // 1. SÉCURITÉ : On vérifie d'abord si la case existe (Gère le cas PASS 8 0)
     if (!Valide(x, y)) {
@@ -170,8 +130,7 @@ bool Jouable(int plt[8][8], int joueur){
 int couppossible (int plt[8][8], int joueur, int coup[64]){//à optimiser
     //Remplit le tableau coup avec les coups possibles
     int k = 0;
-    for (int i=0; i<8; i++) {
-        for (int j=0; j<8; j++){
+    for (int i=0; i<8; i++) {        for (int j=0; j<8; j++){
             if (FeeLePa(plt, i, j, joueur)==1){
                 coup[k]=i*8+j;
                 k++;

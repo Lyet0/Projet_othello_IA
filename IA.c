@@ -35,7 +35,6 @@ int evaluation(int plt[8][8],int joueur){
     int casenimi=0; 
     for (int i=0; i<64; i++){
         if (plt[i/8][i%8]==joueur){
-            casalier = casalier +1;
             if ( ((i==1) )||(i==8)){
                 if (plt[0][0]==(joueur)){
                     score = score -tab_value[i/8][i%8];
@@ -50,28 +49,24 @@ int evaluation(int plt[8][8],int joueur){
             }
             else if ( ((i==48) )||(i==57)){
                 if (plt[7][0]==(joueur)){
-                    score = score -tab_value[i/8][i%8]+Sbonus;
+                    score = score -tab_value[i/8][i%8];
                 }
-                else{ score = score + tab_value[i/8][i%8]+Sbonus;}
+                else{ score = score + tab_value[i/8][i%8];}
             }
             else if ( ((i==54) )||(i==62)){
                 if (plt[7][7]==(joueur)){
-                    score = score -tab_value[i/8][i%8]+Sbonus;
+                    score = score -tab_value[i/8][i%8];
                 }
-                else{ score = score + tab_value[i/8][i%8]+Sbonus;}
+                else{ score = score + tab_value[i/8][i%8];}
             }
             else{
-            score = score + tab_value[i/8][i%8]+Sbonus;}
+            score = score + tab_value[i/8][i%8];}
         }
         else if (plt[i/8][i%8]==(3 - joueur)){
-            casenimi = casenimi +1;
             score = score - tab_value[i/8][i%8];
         }
     }
-    if (casenimi+casalier>32 ){
-        Sbonus = 0;
-    }
-    return score+(casalier-casenimi)*Sbonus;
+    return score;
 }
 int choix(int coup[64], int taille){//à randomiser
     int index = 0;
@@ -79,8 +74,8 @@ int choix(int coup[64], int taille){//à randomiser
         if (coup[i]>coup[index]){
             index = i;
         }
-    }/**/
-    if (rand()%3==0){
+    }
+    if (rand()%2==0){
         for (int j=0; j<64; j++){
             if ((coup[index]*0.85<coup[j])&&(coup[j]<coup[index])){
                 index = j;
@@ -91,9 +86,6 @@ int choix(int coup[64], int taille){//à randomiser
 }
 
 int min_max(int deep,int plt[8][8],int type,int current_player, int root_player,int alpha,int beta ){//à optimiser
-    if ((deep == 0)||(fini(plt)==true)) {
-        return evaluation(plt,root_player);
-    }
     if (!Jouable(plt, current_player)){
         if (!Jouable(plt, 3 - current_player)){
             return final_evaluation(plt,root_player);
@@ -101,7 +93,9 @@ int min_max(int deep,int plt[8][8],int type,int current_player, int root_player,
         else {
         return min_max(deep-1, plt, 1-type,  3-current_player, root_player,alpha,beta) ;}
     }
-
+    if ((deep == 0)||(fini(plt)==true)) {
+        return evaluation(plt,root_player);
+    }
     int bestscore;
     int coup[64];
     memset(coup, -1000, 64);
@@ -187,39 +181,3 @@ int choisircoup (int plt[8][8], int joueur,int deep){
         }
     return coup[choix(bscore,nb_coup)];
 }
-
-
-
-
-
-
-
-
-
-/*
-int evaluation(int plt[8][8],int play,int n,int joueur){
-    if (n==0){return (tab_value[play/8][play%8]);}
-    int k = 0; 
-    int coup[64]={-1};
-    int refplt[8][8]={0};
-    for (int x=0; x<8; x++){
-        for (int y=0; y<8; y++){
-            refplt[x][y]=plt[x][y];
-        }
-        }
-    for (int i; i<64; i++){
-        {if (SePaPocible(plt, i/8, i%8, joueur)==1){
-            coup[k]=evaluation(plt, i, n-1, 3 - joueur)-evaluation(plt, i, n-1, 3 - joueur);
-            plt[i/8][i%8]=0;
-            k++;
-            for (int x=0; x<8; x++){
-                for (int y=0; y<8; y++){
-                    refplt[x][y]=plt[x][y];
-                }
-            }
-            }
-        }
-    }
-    return choix(coup)+tab_value[play/8][play%8];
-}   
-*/
