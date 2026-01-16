@@ -5,39 +5,73 @@
 #include "userNetwork.h"
 #include "function_othelo.h"
 #include <time.h>
-/*int tab_value[8][8]={
-    {100, -12, 60, 30, 30, 60, -12, 100},
-    {-12, -15, 20, 20, 20, 20, -15, -12},
-    {60, 20, 5, 10, 10, 5, 20, 60},
-    {30, 20, 10, 35, 35, 10, 20, 30},
-    {30, 20, 10, 35, 35, 10, 20, 30},
-    {60, 20, 5, 10, 10, 5, 20, 60},
-    {-12, -15, 20, 20, 20, 20, -15, -12},
-    {100, -12, 60, 30, 30, 60, -12, 100}
-};
-*/
+int Sbonus = 0;
 int tab_value[8][8]={
-    {300, -100, 30, 10, 10, 30, -100, 300},
-    {-100, -150, 0, 0, 0, 0, -150, -100},
-    {30, 0, 1, 2, 2, 1, 0, 30},
-    {10, 0, 2, 16, 16, 2, 0, 10},
-    {10, 0, 2, 16, 16, 2, 0, 10},
-    {30, 0, 1, 2, 2, 1, 0, 30},
-    {-100, -150, 0, 0, 0, 0, -150, -100},
-    {300, -100, 30, 10, 10, 30, -100, 300}
+    {100, -20, 30, 10, 10, 30, -20, 100},
+    {-20, -50, -2, -2, -2, -2, -50, -20},
+    {30, -2, 5, 2, 2, 5, -2, 30},
+    {10, -2, 2, 4, 4, 2, -2, 10},
+    {10, -2, 2, 4, 4, 2, -2, 10},
+    {30, -2, 5, 2, 2, 5, -2, 30},
+    {-20, -50, -2, -2, -2, -2, -50, -20},
+    {100, -20, 30, 10, 10, 30, -20, 100}
 };
 time_t letemps;
-int evaluation(int plt[8][8],int joueur){
+int final_evaluation(int plt[8][8],int joueur){
     int score = 0;
     for (int i=0; i<64; i++){
         if (plt[i/8][i%8]==joueur){
-            score = score + tab_value[i/8][i%8];
+            score = score + 1;
         }
         else if (plt[i/8][i%8]==3 - joueur){
-            score = score - tab_value[i/8][i%8];
+            score = score - 1;
         }
     }
     return score;
+}
+int evaluation(int plt[8][8],int joueur){
+    int score = 0;
+    int casalier=0; 
+    int casenimi=0; 
+    for (int i=0; i<64; i++){
+        if (plt[i/8][i%8]==joueur){
+            casalier = casalier +1;
+            if ( ((i==1) )||(i==8)){
+                if (plt[0][0]==(joueur)){
+                    score = score -tab_value[i/8][i%8];
+                }
+                else{ score = score + tab_value[i/8][i%8];}
+            }
+            else if ( ((i==6) )||(i==15)){
+                if (plt[0][7]==(joueur)){
+                    score = score -tab_value[i/8][i%8];
+                }
+                else{ score = score + tab_value[i/8][i%8];}
+            }
+            else if ( ((i==48) )||(i==57)){
+                if (plt[7][0]==(joueur)){
+                    score = score -tab_value[i/8][i%8]+Sbonus;
+                }
+                else{ score = score + tab_value[i/8][i%8]+Sbonus;}
+            }
+            else if ( ((i==54) )||(i==62)){
+                if (plt[7][7]==(joueur)){
+                    score = score -tab_value[i/8][i%8]+Sbonus;
+                }
+                else{ score = score + tab_value[i/8][i%8]+Sbonus;}
+            }
+            else{
+            score = score + tab_value[i/8][i%8]+Sbonus;}
+        }
+        else if (plt[i/8][i%8]==(3 - joueur)){
+            casenimi = casenimi +1;
+            score = score - tab_value[i/8][i%8];
+        }
+    }
+    if (casenimi+casalier>32 ){
+        Sbonus = 0;
+    }
+    return score+(casalier-casenimi)*Sbonus;
 }
 int choix(int coup[64], int taille){//à randomiser
     int index = 0;
@@ -62,7 +96,7 @@ int min_max(int deep,int plt[8][8],int type,int current_player, int root_player,
     }
     if (!Jouable(plt, current_player)){
         if (!Jouable(plt, 3 - current_player)){
-            return evaluation(plt,root_player);
+            return final_evaluation(plt,root_player);
         }
         else {
         return min_max(deep-1, plt, 1-type,  3-current_player, root_player,alpha,beta) ;}
